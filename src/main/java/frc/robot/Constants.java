@@ -42,8 +42,12 @@ public static final int ELEVATOR_LIFT_CHAIN_Y_AXIS = 5;
 public static final int ELEVATOR_LIFT_1 = 0;
 //Intake Motor PWM Port
 public static final int INTAKE_MOTOR_1 = 8;
-public static final int DRIVER_CONTROLLER_1_LEFTJOYSTICK_Y_AXIS = 0;
-public static final int DRIVER_CONTROLLER_1_RIGHTJOYSTICK_Y_AXIS = 0;
+
+public static final int DRIVER_CONTROLLER_1_LEFTJOYSTICK_Y_AXIS = 1;
+public static final int DRIVER_CONTROLLER_1_RIGHTJOYSTICK_Y_AXIS = 5;
+
+public static final int DRIVERCONTROLLER_2_LEFT_JOYSTICK_Y_AXIS = 1;
+public static final int DRIVER_CONTROLLER_2_RIGHTJOYSTICK_Y_AXIS = 5;
 
 
 

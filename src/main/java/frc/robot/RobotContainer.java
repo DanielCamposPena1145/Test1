@@ -24,16 +24,13 @@ import frc.robot.subsystems.Intake;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public final DriveTrain m_drivetrain = new DriveTrain();
-  public static final ElevatorPulley m_elevatorpulley = new ElevatorPulley();
+  public final ElevatorPulley m_elevatorpulley = new ElevatorPulley();
   public static final ElevatorLift m_elevatorlift = new ElevatorLift();
   public static final Intake m_intake = new Intake();
-
-  public static ElevatorLiftChain m_elevatorliftchain = new ElevatorLiftChain();
-  public static ElevatorPivot m_elevatorpivot = new ElevatorPivot();
   
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  public CommandXboxController driverController1 = new CommandXboxController(Constants.DRIVER_CONTROLLER_1_PORT);
-  public static CommandXboxController driverController2 = new CommandXboxController(Constants.DRIVER_CONTROLLER_2_PORT);
+  public final CommandXboxController driverController1 = new CommandXboxController(Constants.DRIVER_CONTROLLER_1_PORT);
+  public final CommandXboxController driverController2 = new CommandXboxController(Constants.DRIVER_CONTROLLER_2_PORT);
 
 
 
@@ -56,10 +53,9 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     m_drivetrain.setDefaultCommand(new TankDrive(m_drivetrain, ()-> driverController1.getRawAxis(Constants.DRIVER_CONTROLLER_1_LEFTJOYSTICK_Y_AXIS), ()-> driverController1.getRawAxis(Constants.DRIVER_CONTROLLER_1_RIGHTJOYSTICK_Y_AXIS)));
-    m_elevatorpulley.setDefaultCommand(m_elevatorpivot);
-    m_elevatorlift.setDefaultCommand(m_elevatorliftchain);
+    m_elevatorpulley.setDefaultCommand(new ElevatorPivot(m_elevatorpulley, ()-> driverController2.getRawAxis(Constants.DRIVERCONTROLLER_2_LEFT_JOYSTICK_Y_AXIS)));
+    m_elevatorlift.setDefaultCommand(new ElevatorLiftChain(m_elevatorlift, ()-> driverController2.getRawAxis(Constants.DRIVER_CONTROLLER_2_RIGHTJOYSTICK_Y_AXIS)));
     
-
     if(driverController2.leftTrigger().getAsBoolean()) {
       m_intake.intakeMotorSpeed(driverController2.getLeftTriggerAxis()*0.7);
     } else if(driverController2.rightTrigger().getAsBoolean()) {

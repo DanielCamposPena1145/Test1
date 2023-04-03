@@ -4,14 +4,24 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
+
+import frc.robot.subsystems.ElevatorLift;
 
 public class ElevatorLiftChain extends CommandBase {
   /** Creates a new ElevatorLiftChain. */
-  public ElevatorLiftChain() {
-    addRequirements(RobotContainer.m_elevatorlift);
+
+  private ElevatorLift m_elevatorlift;
+
+  DoubleSupplier yinput;
+
+  public ElevatorLiftChain(ElevatorLift m_elevatorlift, DoubleSupplier yinput) {
+    this.m_elevatorlift = m_elevatorlift;
+    this.yinput = yinput;
+
+    addRequirements(m_elevatorlift);
   }
 
   // Called when the command is initially scheduled.
@@ -21,15 +31,15 @@ public class ElevatorLiftChain extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double liftSpeed = RobotContainer.driverController2.getRawAxis(Constants.ELEVATOR_LIFT_CHAIN_Y_AXIS);
+    // double liftSpeed = RobotContainer.driverController2.getRawAxis(Constants.ELEVATOR_LIFT_CHAIN_Y_AXIS);
 
-    RobotContainer.m_elevatorlift.elevatorLiftSpeed(liftSpeed);
+    m_elevatorlift.elevatorLiftSpeed(yinput.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_elevatorlift.elevatorLiftSpeed(0);
+    m_elevatorlift.elevatorLiftSpeed(0);
   }
 
   // Returns true when the command should end.

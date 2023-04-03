@@ -4,14 +4,22 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.ElevatorPulley;
 
 public class ElevatorPivot extends CommandBase {
   /** Creates a new ElevatorPivot. */
-  public ElevatorPivot() {
-    addRequirements(RobotContainer.m_elevatorpulley);
+
+  private ElevatorPulley m_elevatorpulley;
+
+  DoubleSupplier yinput;
+
+  public ElevatorPivot(ElevatorPulley m_elevatorpulley, DoubleSupplier yinput) {
+    this.m_elevatorpulley = m_elevatorpulley;
+    this.yinput = yinput;
+    addRequirements(m_elevatorpulley);
   }
 
   // Called when the command is initially scheduled.
@@ -21,15 +29,17 @@ public class ElevatorPivot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double motorSpeed = RobotContainer.driverController2.getRawAxis(Constants.ELEVATOR_PULLEY_Y_AXIS);
 
-    RobotContainer.m_elevatorpulley.driverPulley(motorSpeed);
+
+    // double motorSpeed = RobotContainer.driverController2.getRawAxis(Constants.ELEVATOR_PULLEY_Y_AXIS);
+
+    m_elevatorpulley.driverPulley(yinput.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_elevatorpulley.driverPulley(0);
+    m_elevatorpulley.driverPulley(0);
   }
 
   // Returns true when the command should end.
